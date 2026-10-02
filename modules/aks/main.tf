@@ -37,6 +37,7 @@ resource "azurerm_kubernetes_cluster" "this" {
   azure_active_directory_role_based_access_control {
     tenant_id              = data.azurerm_client_config.current.tenant_id
     admin_group_object_ids = []
+    azure_rbac_enabled     = true
   }
 
   linux_profile {

@@ -1,26 +1,26 @@
 variable "name" {
-	type = string
+       type = string
 }
 
 variable "location" {
-	type = string
+       type = string
 }
 
 variable "resource_group_name" {
-	type = string
+       type = string
 }
 
 variable "sku" {
-	type    = string
-	default = "PerGB2018"
+       type    = string
+       default = "PerGB2018"
 }
 
 variable "retention_in_days" {
-	type    = number
-	default = 30
+       type    = number
+       default = 30
 }
 
 variable "tags" {
-	type    = map(string)
-	default = {}
+       type    = map(string)
+       default = {}
 }

@@ -1,0 +1,13 @@
+# Local .terraform directories and files
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+*.tfplan
+
+# Private keys and credentials
+*.pem
+*.key
+
+# OS files
+.DS_Store

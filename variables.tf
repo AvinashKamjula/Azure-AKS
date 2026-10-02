@@ -37,6 +37,56 @@ variable "aks_subnet_prefix" {
   default     = "10.1.0.0/23"
 }
 
+variable "jumpbox_subnet_name" {
+  description = "Subnet for the private VM used to administer AKS through Azure Bastion"
+  type        = string
+  default     = "jumpbox-subnet"
+}
+
+variable "jumpbox_subnet_prefix" {
+  description = "CIDR prefix for the jumpbox subnet"
+  type        = string
+  default     = "10.1.2.0/24"
+}
+
+variable "azure_bastion_subnet_prefix" {
+  description = "CIDR prefix for AzureBastionSubnet; Azure requires at least /26"
+  type        = string
+  default     = "10.1.3.0/26"
+
+  validation {
+    condition = can(cidrhost(var.azure_bastion_subnet_prefix, 0)) && try(
+      tonumber(split("/", var.azure_bastion_subnet_prefix)[1]) <= 26,
+      false
+    )
+    error_message = "AzureBastionSubnet must be a valid CIDR with a /26 prefix or larger address range."
+  }
+}
+
+variable "bastion_name" {
+  description = "Name of the managed Azure Bastion host"
+  type        = string
+  default     = "aks-bastion"
+}
+
+variable "jumpbox_name" {
+  description = "Name of the private Linux VM used to administer AKS"
+  type        = string
+  default     = "aks-jumpbox"
+}
+
+variable "jumpbox_vm_size" {
+  description = "Size of the private Linux administration VM"
+  type        = string
+  default     = "Standard_D2s_v3"
+}
+
+variable "bastion_admin_username" {
+  description = "Linux username for SSH access to the jumpbox"
+  type        = string
+  default     = "azureuser"
+}
+
 variable "log_analytics_name" {
   type    = string
   default = "la-aks-demo"
@@ -60,6 +110,12 @@ variable "tags" {
 variable "cluster_name" {
   type    = string
   default = "aks-cluster"
+}
+
+variable "aks_admin_user_object_id" {
+  description = "Microsoft Entra object ID of the user to grant AKS RBAC Cluster Admin"
+  type        = string
+  default     = "ec33a233-b836-4e9a-bc04-8fa1c95b121f"
 }
 
 variable "dns_prefix" {

@@ -26,10 +26,32 @@ resource "azurerm_subnet" "aks_subnet" {
   }
 }
 
+resource "azurerm_subnet" "jumpbox_subnet" {
+  name                 = var.jumpbox_subnet_name
+  resource_group_name  = var.resource_group_name
+  virtual_network_name = azurerm_virtual_network.this.name
+  address_prefixes     = [var.jumpbox_subnet_prefix]
+}
+
+resource "azurerm_subnet" "azure_bastion_subnet" {
+  name                 = "AzureBastionSubnet"
+  resource_group_name  = var.resource_group_name
+  virtual_network_name = azurerm_virtual_network.this.name
+  address_prefixes     = [var.azure_bastion_subnet_prefix]
+}
+
 output "vnet_id" {
   value = azurerm_virtual_network.this.id
 }
 
 output "aks_subnet_id" {
   value = azurerm_subnet.aks_subnet.id
+}
+
+output "jumpbox_subnet_id" {
+  value = azurerm_subnet.jumpbox_subnet.id
+}
+
+output "azure_bastion_subnet_id" {
+  value = azurerm_subnet.azure_bastion_subnet.id
 }

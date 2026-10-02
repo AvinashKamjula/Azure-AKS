@@ -27,3 +27,18 @@ variable "aks_subnet_prefix" {
   description = "AKS subnet CIDR prefix"
   type        = string
 }
+
+variable "jumpbox_subnet_name" {
+  description = "Subnet for the private cluster administration VM"
+  type        = string
+}
+
+variable "jumpbox_subnet_prefix" {
+  description = "CIDR prefix for the jumpbox subnet"
+  type        = string
+}
+
+variable "azure_bastion_subnet_prefix" {
+  description = "CIDR prefix for the required AzureBastionSubnet (at least /26)"
+  type        = string
+}
